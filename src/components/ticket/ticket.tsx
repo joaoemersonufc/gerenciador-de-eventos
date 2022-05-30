@@ -1,7 +1,24 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useCallback } from 'react';
+import styled from 'styled-components';
+import { ticket } from '../../ticket_template/ticket';
 
-function ticket() {
+interface DataProps {
+    dataList: string[];
+}
+
+function Ticket({ dataList }: DataProps) {
+
+    const handleGenerate = useCallback(() => {
+        const pdfWindow = window.open('ticket');
+        dataList?.map(data => {
+            return (
+                pdfWindow?.document.write(ticket(pdfWindow, 'teste'))
+            );
+        }
+        );
+
+    }, [dataList]);
+
     return (
         <Container>
             <TicketSection>
@@ -11,24 +28,24 @@ function ticket() {
                         <span>&nbsp;&nbsp;\( ﾟヮﾟ)/</span>
                     </h1>
                     <h3>
-                        Your show ticket has been successfully booked.
-                        We hope to see you soon. 🍿
+                        Seu ingresso foi reservado com sucesso, aproveite o evento.
+                        Nos vemos em breve. :)
                     </h3>
                 </TicketMessage>
                 <DownloadTicket>
-                    <a href="/ticket_template/ticket.pdf" target="_blank" style={{"text-decoration":"none"}}>
+                    <button onClick={() => handleGenerate()} style={{ textDecoration: "none" }}>
                         <Download>
                             <img src="/images/tickets.svg" alt="Ticket" />
                             <span>DOWNLOAD TICKETS</span>
                         </Download>
-                    </a>
+                    </button>
                 </DownloadTicket>
             </TicketSection>
         </Container>
     )
 }
 
-export default ticket
+export default Ticket
 
 const Container = styled.main`
     min-height: calc(100vh - 140px);

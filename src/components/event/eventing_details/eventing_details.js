@@ -1,31 +1,34 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Link } from "react-router-dom";
 import moment from "moment";
+import 'moment/locale/pt-br';
+import React from 'react';
+import { Link } from "react-router-dom";
+import styled from 'styled-components';
 
 const ScreeningDetails = (props) => {
+    const now = moment();
+
     return (
         <Container>
-            <h4>SCREENING DETAILS</h4>
+            <h4>Detalhes do evento</h4>
             <Content>
-                <Link to={'/booking/'+props.movie.id} style={{"text-decoration": "none"}}>
+                <Link to={'/booking/'+props.event.id} style={{"text-decoration": "none"}}>
                     <Wrap>
-                        <span>10 AM {moment().add(1,'days').format('DD MMM')}</span>
+                        <span>10:00 {now.add(1,'days').format('DD MMM')}</span>
                     </Wrap>
                 </Link>
-                <Link to={'/booking/'+props.movie.id} style={{"text-decoration": "none"}}>
+                <Link to={'/booking/'+props.event.id} style={{"text-decoration": "none"}}>
                     <Wrap>
-                        <span>8 PM {moment().add(1,'days').format('DD MMM')}</span>
+                        <span>08:00 {now.add(1,'days').format('DD MMM')}</span>
                     </Wrap>
                 </Link>
-                <Link to={'/booking/'+props.movie.id} style={{"text-decoration": "none"}}>
+                <Link to={'/booking/'+props.event.id} style={{"text-decoration": "none"}}>
                     <Wrap>
-                        <span>10 AM {moment().add(2,'days').format('DD MMM')}</span>
+                        <span>10:00 {now.add(2,'days').format('DD MMM')}</span>
                     </Wrap>
                 </Link>
-                <Link to={'/booking/'+props.movie.id} style={{"text-decoration": "none"}}>
+                <Link to={'/booking/'+props.event.id} style={{"text-decoration": "none"}}>
                     <Wrap>
-                        <span>8 PM {moment().add(2,'days').format('DD MMM')}</span>
+                        <span>08:00 {now.add(2,'days').format('DD MMM')}</span>
                     </Wrap>
                 </Link>
             </Content>

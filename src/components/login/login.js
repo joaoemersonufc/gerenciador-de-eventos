@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
-import styled from 'styled-components'
 import 'font-awesome/css/font-awesome.min.css';
+import React, { useState } from 'react';
 import {
     Link
 } from "react-router-dom";
+import styled from 'styled-components';
 
 function Login() {
     const [mode, toggleMode] = useState(true);
@@ -12,9 +12,9 @@ function Login() {
         <Container>
             <Content>
                 <header>
-                    <h1>{mode ? 'Welcome back!' : 'Hey There!'}</h1>
+                    <h1>{mode ? 'Bem-vindo de volta!' : 'Se junte a nós!'}</h1>
                     <Switch>
-                        <span>{mode ? 'Don\'t' : 'Already'} have an account?</span>
+                        <span>{mode ? 'Não' : 'Já'} possui uma conta?</span>
                         <input type="checkbox" id="checkbox1" onClick={() => toggleMode(!mode)} />
                         <label for="checkbox1"></label>
                     </Switch>
@@ -35,34 +35,46 @@ function LoginForm({mode}) {
                 <div>
                     <InputIcon style={{display: !mode ? "none": ""}}>
                         <i className="fa fa-user" />
-                        <Input type="email" id="email" label="email" placeholder="Email Address" disabled={!mode} />
+                        <Input type="email" id="email" label="email" placeholder="Digite seu email" disabled={!mode} />
                     </InputIcon>
                     <InputIcon style={{display: !mode ? "none": ""}}>
                         <i className="fa fa-key" />
-                        <Input type="password" id="password" label="password" placeholder="Password" disabled={!mode} />
+                        <Input type="password" id="password" label="password" placeholder="Digite sua senha" disabled={!mode} />
                     </InputIcon>
                 </div>
                 <div>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-user" />
-                        <Input type="text" id="fullname" label="full name" placeholder="Your Name" disabled={mode} />
+                        <Input type="text" id="fullname" label="full name" placeholder="Digite seu nome completo" disabled={mode} />
                     </InputIcon>
-                    <InputIcon style={{display: mode ? "none": ""}}>
-                        <i className="fa fa-at" />
-                        <Input type="email" id="email" label="email" placeholder="Email Address" disabled={mode} />
+                    <InputIcon style={{display: !mode ? "none": ""}}>
+                        <i className="fa fa-user" />
+                        <Input type="email" id="email" label="email" placeholder="Digite seu email" disabled={!mode} />
+                    </InputIcon>
+                    <InputIcon style={{display: !mode ? "none": ""}}>
+                        <i className="fa fa-key" />
+                        <Input type="password" id="password" label="password" placeholder="Digite sua senha" disabled={!mode} />
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-key" />
-                        <Input type="password" id="createpassword" label="password" placeholder="Password" disabled={mode} />
+                        <Input type="password" id="repeatpassword" label="repeat password" placeholder="Repita sua senha" disabled={mode} />
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-key" />
-                        <Input type="password" id="repeatpassword" label="repeat password" placeholder="Repeat Password" disabled={mode} />
+                        <Input type="cpf" id="cpf" label="cpf" placeholder="Digite seu CPF" disabled={mode} />
+                    </InputIcon>
+                    <InputIcon style={{display: mode ? "none": ""}}>
+                        <i className="fa fa-key" />
+                        <Input type="birth" id="birthday" label="birthday" placeholder="Digite sua data de nascimento" disabled={mode} />
+                    </InputIcon>
+                    <InputIcon style={{display: mode ? "none": ""}}>
+                        <i className="fa fa-key" />
+                        <Input type="gender" id="gender" label="gender" placeholder="Sexo" disabled={mode} />
                     </InputIcon>
                 </div>
             </div>
             <Link to="/">
-                <Button>{mode ? 'Log In' : 'Sign Up'}</Button>
+                <Button>{mode ? 'Entrar' : 'Cadastrar'}</Button>
             </Link>
         </Form>
     )
@@ -80,7 +92,7 @@ const Container = styled.div`
         background-position: top;
         background-size: cover;
         background-repeat: no-repeat;
-        background-image: url("/images/login-bg.jpg");
+        background-image: url("/images/banner.jpg");
         position: absolute;
         content: "";
         top:0;

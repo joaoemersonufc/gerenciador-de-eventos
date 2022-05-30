@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components';
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import React from 'react';
 import { Link } from "react-router-dom";
-import { movieData } from "./../../../data/data.js";
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import styled from 'styled-components';
+import { eventData } from "./../../../data/data.js";
 
 function slider() {
     let settings = {
@@ -18,19 +18,19 @@ function slider() {
 
     return (
         <Carousel {...settings}>
-            <Link to={'/movie/'+movieData[0]["id"]}>
+            <Link to={'/event/'+eventData[0]["id"]}>
                 <Wrap>
-                    <img src="/images/poster1.jpg" alt={movieData[0]["name"]} />
+                    <img src="/images/banner1.jpg" alt={eventData[0]["name"]} />
                 </Wrap>
             </Link>
-            <Link to={'/movie/'+movieData[1]["id"]}>
+            <Link to={'/event/'+eventData[1]["id"]}>
                 <Wrap>
-                    <img src="/images/poster2.jpg" alt={movieData[1]["name"]} />
+                    <img src="/images/banner2.png" alt={eventData[1]["name"]} />
                 </Wrap>
             </Link>
-            <Link to={'/movie/'+movieData[2]["id"]}>
+            <Link to={'/event/'+eventData[2]["id"]}>
                 <Wrap>
-                    <img src="/images/poster3.jpg" alt={movieData[2]["name"]} />
+                    <img src="/images/banner3.jpg" alt={eventData[2]["name"]} />
                 </Wrap>
             </Link>
         </Carousel>
@@ -77,7 +77,8 @@ const Wrap = styled.div`
         position: relative;
         padding: 4px;
         width: 100%;
-        height: 100%;
+        height: 390px;
+        object-fit: cover;
     }
 
     &:hover {

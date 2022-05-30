@@ -1,44 +1,53 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import ReactPlayer from 'react-player'
-import 'font-awesome/css/font-awesome.min.css'
+import 'font-awesome/css/font-awesome.min.css';
+import React, { useState } from 'react';
+import ReactPlayer from 'react-player';
 import { Link } from "react-router-dom";
+import styled from 'styled-components';
 
-const MovieDetails = (props) => {
+const EventDetails = (props) => {
     const [mute, setMute] = useState(true);
 
     return (
         <Container>
             <Details>
                 <h1>
-                    {props.movie.name}
+                    {props.event.name}
                 </h1>
                 <SubTitle>
-                    {props.movie.lang} • {props.movie.duration}m • Animated
+                    {props.event.lang} • {props.event.duration}m • Evento
                 </SubTitle>
                 <Description>
-                    {props.movie.desc}
+                    {props.event.desc}
                 </Description>
-                <Link to={'/booking/'+props.movie.id} style={{"text-decoration":"none"}}>
+                {props.event.id !== 3 ? 
+                <Link to={'/booking/'+props.event.id} style={{"text-decoration":"none"}}>
                     <BookTicket>
                         <img src="/images/ticket.png" alt="" />
-                        <span>BOOK TICKETS</span>
+                        <span>COMPRAR INGRESSOS</span>
                     </BookTicket>
-                </Link>
+                </Link> 
+                :
+                <Link style={{"text-decoration":"none", "pointer-events": "none"}}>
+                    <BookTicket>
+                        <img src="/images/ticket.png" alt="" />
+                        <span>EVENTO ENCERRADO</span>
+                    </BookTicket>
+                </Link> 
+                }
             </Details>
             <Trailer>
-                <MovieTrailerPlayer>
-                    <ReactPlayer id='MovieTrailer' url={props.movie.trailer} playing={true} loop={true} muted={mute} controls={false} width='100%' height='100%' />
+                <EventTrailerPlayer>
+                    <ReactPlayer id='EventTrailer' url={props.event.trailer} playing={true} loop={true} muted={mute} controls={false} width='100%' height='100%' />
                     <UnMute onClick={() => setMute(!mute)}>
                         <img src={mute ? "/images/muted.png" : "/images/unmuted.png"} alt="Unmute" />
                     </UnMute>
-                </MovieTrailerPlayer>
+                </EventTrailerPlayer>
             </Trailer>
         </Container>
     )
 }
 
-export default MovieDetails
+export default EventDetails
 
 const Container = styled.div`
     display: flex;
@@ -109,12 +118,12 @@ const Trailer = styled.div`
     }
 `
 
-const MovieTrailerPlayer = styled.div`
+const EventTrailerPlayer = styled.div`
     
     position: relative;
     padding-top: 56.25%;
     
-    #MovieTrailer {
+    #EventTrailer {
         position: absolute;
         top: 0;
         left: 0;

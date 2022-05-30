@@ -1,15 +1,17 @@
-import React from 'react'
-import styled from 'styled-components'
-
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React from 'react';
+import { AiOutlineOrderedList } from 'react-icons/ai';
 import {
     Link
 } from "react-router-dom";
+import styled from 'styled-components';
+
 
 function header() {
     return (
         <Nav>
             <Link to="/" style={{"text-decoration":"none"}}>
-                <Logo src="/images/tfs.png" alt="TFS logo" />
+                <Logo src="/images/logo.png" alt="logo" />
             </Link>
             <NavMenu>
                 <a href="/">
@@ -17,20 +19,16 @@ function header() {
                     <span>HOME</span>
                 </a>
                 <a>
-                    <img src="/images/request.svg" alt="request a movie icon" />
-                    <span>REQUEST A MOVIE</span>
+                    <AiOutlineOrderedList/>
+                    <span>HISTÓRICO</span>
                 </a>
                 <a>
-                    <img src="/images/history.svg" alt="history icon" />
-                    <span>HISTORY</span>
-                </a>
-                <a>
-                    <img src="/images/profile.svg" alt="profile icon" />
-                    <span>MY PROFILE</span>
+                    <img src="/images/history.svg" alt="relatories icon" />
+                    <span>RELATÓRIOS</span>
                 </a>
             </NavMenu>
             <Link to="/login">
-                <UserImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjYlb0-QUxpdl8nTjSiF2NnXK9QRJ-EWNRnqwuutiyP4EDfM0LlHg7NjSVaoibynxEg6U&usqp=CAU" alt="user icon" />
+                <UserImg src="/images/profile.jpg" alt="user icon" />
             </Link>
         </Nav>
     )
@@ -44,7 +42,7 @@ const Nav = styled.nav`
     display: flex;
     align-items: center;
     padding: 0 36px;
-    overflow-x: hidden;
+    overflow: hidden;
 
     @media (max-width: 900px) {
         flex:1;
@@ -53,7 +51,7 @@ const Nav = styled.nav`
     }
 `
 const Logo = styled.img`
-    width: 80px;
+    width: 68px;
 `
 
 const NavMenu = styled.div`
@@ -75,6 +73,7 @@ const NavMenu = styled.div`
         }
 
         span {
+            padding-left: 5px;
             font-size: 13px;
             letter-spacing: 1.42px;
             position: relative;

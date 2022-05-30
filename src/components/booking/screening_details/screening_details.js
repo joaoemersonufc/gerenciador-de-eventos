@@ -1,31 +1,31 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Link } from "react-router-dom";
-import moment from "moment";
+import moment from 'moment';
+import styled from 'styled-components';
 
 function screening_details() {
+    const now = moment();
+
     return (
         <Container>
-            <h4>SELECT SUITABLE SCREENING</h4>
+            <h4>Selecione um assento</h4>
             <Content>
                 <Screening>
-                    <Wrap>
-                        <span>10 AM {moment().add(1,'days').format('DD MMM')}</span>
+                <Wrap>
+                        <span>10:00 {now.add(1,'days').format('DD MMM')}</span>
                     </Wrap>
                 </Screening>
                 <Screening>
                     <Wrap>
-                        <span>8 PM {moment().add(1,'days').format('DD MMM')}</span>
+                        <span>08:00 {now.add(1,'days').format('DD MMM')}</span>
                     </Wrap>
                 </Screening>
                 <Screening>
                     <Wrap>
-                        <span>10 AM {moment().add(2,'days').format('DD MMM')}</span>
+                        <span>10:00 {now.add(2,'days').format('DD MMM')}</span>
                     </Wrap>
                 </Screening>
                 <Screening>
                     <Wrap>
-                        <span>8 PM {moment().add(2,'days').format('DD MMM')}</span>
+                        <span>08:00 {now.add(2,'days').format('DD MMM')}</span>
                     </Wrap>
                 </Screening>
             </Content>

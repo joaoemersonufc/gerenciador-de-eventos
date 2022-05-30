@@ -1,23 +1,23 @@
-import React from 'react'
+
 import styled from 'styled-components'
 
-const CondensedMovieDetails = (props) => {
+const CondensedEventDetails = (props) => {
     return (
         <Container>
-            <img src="/images/cinema.png" alt="cinema icon" />
+            <img src="/images/icone-ticket.png" alt="event icon" />
             <Details>
                 <h1>
-                    {props.movie.name}
+                    {props.event.name}
                 </h1>
                 <SubTitle>
-                    {props.movie.lang} • {props.movie.duration}m • Animated
+                    {props.event.lang} • {props.event.duration}m • Evento
                 </SubTitle>
             </Details>
         </Container>
     )
 }
 
-export default CondensedMovieDetails
+export default CondensedEventDetails
 
 const Container = styled.div`
     padding: 30px 0px 0px;
@@ -29,6 +29,7 @@ const Container = styled.div`
 
     img {
         padding: 0px 20px 0px 5px;
+        max-width: 100px;
     }
 `
 

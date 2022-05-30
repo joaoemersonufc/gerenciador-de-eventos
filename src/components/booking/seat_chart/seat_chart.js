@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import './seat_chart.css';
 
 class seat_chart extends React.Component {
@@ -42,7 +42,7 @@ class seat_chart extends React.Component {
     render() {
       return (
         <div>
-          <h4>PICK YOUR SEATS</h4>
+          <h4>Reserve seu lugar</h4>
           <DrawGrid 
             seat = { this.state.seat }
             available = { this.state.seatAvailable }

@@ -1,11 +1,10 @@
 import React from 'react'
+import { Link, useParams } from "react-router-dom"
 import styled from 'styled-components'
-import CondensedMovieDetails from './condensed_movie_details/condensed_movie_details'
+import { eventData } from "./../../data/data.js"
+import CondensedEventDetails from './condensed_event_details/condensed_event_details'
 import ScreeningDetails from './screening_details/screening_details'
 import SeatChart from './seat_chart/seat_chart'
-import { Link } from "react-router-dom";
-import { useParams }from "react-router-dom"
-import { movieData } from "./../../data/data.js";
 
 function setZoom() {
     if (navigator.appVersion.indexOf("Win") !== -1)
@@ -15,29 +14,29 @@ function setZoom() {
 }
 
 const Booking = () => {
-    const { movie_id } = useParams();
+    const { event_id } = useParams();
     const booking_id = Math.floor(1000 + Math.random() * 9000);
     setZoom()
     return (
         <Container>
             <BookingSection>
-                <CondensedMovieDetails movie={movieData[movie_id-1]} />
-                <ScreeningDetails movie={movieData[movie_id-1]} />
+                <CondensedEventDetails event={eventData[event_id-1]} />
+                <ScreeningDetails event={eventData[event_id-1]} />
                 <SeatChart />
                 <BookButton>
                     <Link to={'/ticket/'+booking_id} style={{"text-decoration":"none"}}>
                         <BookTicket>
                             <img src="/images/ticket.png" alt="" />
-                            <span>BOOK TICKETS</span>
+                            <span>GARANTA SEU INGRESSO</span>
                         </BookTicket>
                     </Link>
                 </BookButton>
             </BookingSection>
-            <MoviePoster>
+            <EventPoster>
                 <Wrap>
-                    <img src={movieData[movie_id-1]["poster"]} alt={movieData[movie_id-1]["name"]} />
+                    <img src={eventData[event_id-1]["poster"]} alt={eventData[event_id-1]["name"]} />
                 </Wrap>
-            </MoviePoster>
+            </EventPoster>
         </Container>
     )
 }
@@ -70,7 +69,7 @@ const BookingSection = styled.div`
         width:100%;
     }
 `
-const MoviePoster = styled.div`
+const EventPoster = styled.div`
     width: auto;
     margin: 0 auto;
     margin-top: 90px;

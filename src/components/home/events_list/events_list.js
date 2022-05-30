@@ -1,18 +1,18 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
 import { Link } from "react-router-dom";
-import { movieData } from "./../../../data/data.js";
+import styled from 'styled-components';
+import { eventData } from "../../../data/data.js";
 
-function movies_list() {
+function events_list() {
     return (
         <Container>
-            <h4>Now Showing</h4>
+            <h4>Eventos em breve</h4>
             <Content>
-                {movieData.map((movie, key) => {
+                {eventData.map((event) => {
                     return (
-                        <Link to={'/movie/'+movie.id}>
+                        <Link to={'/event/'+event.id}>
                             <Wrap>
-                                <img src={movie.poster} alt={movie.name} />
+                                <img src={event.poster} alt={event.name} />
                             </Wrap>
                         </Link>
                     );
@@ -22,7 +22,7 @@ function movies_list() {
     )
 }
 
-export default movies_list
+export default events_list
 
 
 const Container = styled.div`
@@ -47,7 +47,7 @@ const Wrap = styled.div`
 
     img {
         width: 100%;
-        height: 100%;
+        height: 330px;
         object-fit: cover;
     }
 
