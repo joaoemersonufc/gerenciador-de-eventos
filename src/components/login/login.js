@@ -1,9 +1,8 @@
 import 'font-awesome/css/font-awesome.min.css';
+import { useFormik } from 'formik';
 import React, { useState } from 'react';
-import {
-    Link
-} from "react-router-dom";
 import styled from 'styled-components';
+import { useLogin } from '../../contexts/Login/Context';
 
 function Login() {
     const [mode, toggleMode] = useState(true);
@@ -29,53 +28,73 @@ export default Login
 
 function LoginForm({mode}) {
 
+    const initialValues = {
+        fullName: '',
+        cpf: '',
+        gender: '',
+        cel: '',
+        email: '',
+        password: '',
+        repeatPassword: '',
+        birth: ''
+    }
+
+    const { getSignIn, getSignUp } = useLogin();
+
+    const { handleSubmit, values, handleChange } = useFormik({
+        initialValues,
+        onSubmit: mode ? getSignIn : getSignUp,
+    });
+
     return (
-        <Form>
+        <Form onSubmit={handleSubmit}>
             <div>
                 <div>
                     <InputIcon style={{display: !mode ? "none": ""}}>
                         <i className="fa fa-user" />
-                        <Input type="email" id="email" label="email" placeholder="Digite seu email" disabled={!mode} />
+                        <Input type="email" name="email" label="email" placeholder="Digite seu email" disabled={!mode} value={values.email} onChange={handleChange}/>
                     </InputIcon>
                     <InputIcon style={{display: !mode ? "none": ""}}>
                         <i className="fa fa-key" />
-                        <Input type="password" id="password" label="password" placeholder="Digite sua senha" disabled={!mode} />
+                        <Input type="password" name="password" label="password" placeholder="Digite sua senha" disabled={!mode} value={values.password} onChange={handleChange} />
                     </InputIcon>
                 </div>
                 <div>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-user" />
-                        <Input type="text" id="fullname" label="full name" placeholder="Digite seu nome completo" disabled={mode} />
+                        <Input type="text" name="fullName" label="full name" placeholder="Digite seu nome completo" disabled={mode} value={values.fullName} onChange={handleChange} />
                     </InputIcon>
-                    <InputIcon style={{display: !mode ? "none": ""}}>
+                    <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-user" />
-                        <Input type="email" id="email" label="email" placeholder="Digite seu email" disabled={!mode} />
-                    </InputIcon>
-                    <InputIcon style={{display: !mode ? "none": ""}}>
-                        <i className="fa fa-key" />
-                        <Input type="password" id="password" label="password" placeholder="Digite sua senha" disabled={!mode} />
+                        <Input type="email" name="email" label="email" placeholder="Digite seu email" disabled={mode} value={values.email} onChange={handleChange} />
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-key" />
-                        <Input type="password" id="repeatpassword" label="repeat password" placeholder="Repita sua senha" disabled={mode} />
+                        <Input type="password" name="password" label="password" placeholder="Digite sua senha" disabled={mode} value={values.password} onChange={handleChange} />
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-key" />
-                        <Input type="cpf" id="cpf" label="cpf" placeholder="Digite seu CPF" disabled={mode} />
+                        <Input type="password" name="repeatPassword" label="repeat password" placeholder="Repita sua senha" disabled={mode} value={values.repeatPassword} onChange={handleChange} />
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
-                        <i className="fa fa-key" />
-                        <Input type="birth" id="birthday" label="birthday" placeholder="Digite sua data de nascimento" disabled={mode} />
+                        <i className="fa fa-user" />
+                        <Input type="cpf" name="cpf" label="cpf" placeholder="Digite seu CPF" disabled={mode} value={values.cpf} onChange={handleChange} />
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
-                        <i className="fa fa-key" />
-                        <Input type="gender" id="gender" label="gender" placeholder="Sexo" disabled={mode} />
+                        <i className="fa fa-user" />
+                        <Input type="cel" name="cel" label="cel" placeholder="Digite seu Telefone" disabled={mode} value={values.cel} onChange={handleChange} />
+                    </InputIcon>
+                    <InputIcon style={{display: mode ? "none": ""}}>
+                        <i className="fa fa-user" />
+                        <Input type="birth" name="birth" label="birthday" placeholder="Digite sua data de nascimento" disabled={mode} value={values.birth} onChange={handleChange} />
+                    </InputIcon>
+                    <InputIcon style={{display: mode ? "none": ""}}>
+                        <i className="fa fa-user" />
+                        <Input type="gender" name="gender" label="gender" placeholder="Sexo" disabled={mode} value={values.gender} onChange={handleChange} />
                     </InputIcon>
                 </div>
             </div>
-            <Link to="/">
-                <Button>{mode ? 'Entrar' : 'Cadastrar'}</Button>
-            </Link>
+                <Button onSubmit={handleSubmit}>{mode ? 'Entrar' : 'Cadastrar'}</Button>
         </Form>
     )
 

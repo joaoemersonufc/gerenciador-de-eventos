@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { AiOutlineOrderedList } from 'react-icons/ai';
+import { BsPlusCircle } from 'react-icons/bs';
 import {
     Link
 } from "react-router-dom";
@@ -25,6 +26,10 @@ function header() {
                 <a>
                     <img src="/images/history.svg" alt="relatories icon" />
                     <span>RELATÓRIOS</span>
+                </a>
+                <a>
+                    <BsPlusCircle/>
+                    <span>CADASTRAR EVENTO</span>
                 </a>
             </NavMenu>
             <Link to="/login">
