@@ -34,14 +34,14 @@ export const ToastService = {
   dealWithErrorRequest(res: any) {
     if (res.response) {
       if (res.response.status === 403) {
-        ToastService.error(res.response.data?.description);
+        ToastService.error(res.response.data?.message);
         return;
       }
       if (res.response.status === 401) {
         ToastService.error(res.response.data.error);
         return;
       }
-      return ToastService.error(res.response.data?.description);
+      return ToastService.error(res.response.data?.message);
     }
     if (res.request) {
       return ToastService.error('IMPOSSIBLE_TO_COMMUNICATE');
