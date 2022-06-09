@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Event } from '../../contexts/Event';
 import { Login } from '../../contexts/Login';
 
 type ProvidersProps = {
@@ -7,6 +8,8 @@ type ProvidersProps = {
 
 export function Providers({ children }: ProvidersProps): JSX.Element {
     return (
-        <Login>{children}</Login>
+        <Event>
+            <Login>{children}</Login>
+        </Event>
     );
 }

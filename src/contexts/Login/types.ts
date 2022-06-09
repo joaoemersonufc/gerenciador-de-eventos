@@ -12,6 +12,7 @@ export type ISignUp = {
 };
 
 export type ISignIn = {
+	token?: string,
 	email: string,
 	password: string,
 };

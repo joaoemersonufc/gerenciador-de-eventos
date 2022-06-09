@@ -29,14 +29,14 @@ export default Login
 function LoginForm({mode}) {
 
     const initialValues = {
-        fullName: '',
+        name: '',
         cpf: '',
-        gender: '',
-        cel: '',
+        sexo: '',
+        telephone: '',
         email: '',
         password: '',
         repeatPassword: '',
-        birth: ''
+        birthDateDate: ''
     }
 
     const { getSignIn, getSignUp } = useLogin();
@@ -45,6 +45,25 @@ function LoginForm({mode}) {
         initialValues,
         onSubmit: mode ? getSignIn : getSignUp,
     });
+
+    const cpf = (v) => {
+        v=v.replace(/\D/g,"")                   
+        v=v.replace(/(\d{3})(\d)/,"$1.$2")      
+        v=v.replace(/(\d{3})(\d)/,"$1.$2")       
+        v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2") 
+        return v
+    }
+
+    const dateInputMask = (elm) => {
+          var len = elm?.length;
+          if(len === 2) {
+              console.log('oi')
+            return elm += '/';
+          }
+          if(len === 5) {
+            return elm += '/';
+          }
+      };
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -62,7 +81,7 @@ function LoginForm({mode}) {
                 <div>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-user" />
-                        <Input type="text" name="fullName" label="full name" placeholder="Digite seu nome completo" disabled={mode} value={values.fullName} onChange={handleChange} />
+                        <Input type="text" name="name" label="full name" placeholder="Digite seu nome completo" disabled={mode} value={values.name} onChange={handleChange} />
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-user" />
@@ -78,19 +97,19 @@ function LoginForm({mode}) {
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-user" />
-                        <Input type="cpf" name="cpf" label="cpf" placeholder="Digite seu CPF" disabled={mode} value={values.cpf} onChange={handleChange} />
+                        <Input maxLength={14} type="text" name="cpf" label="cpf" placeholder="Digite seu CPF" disabled={mode} value={cpf(values.cpf)} onChange={handleChange} />
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-user" />
-                        <Input type="cel" name="cel" label="cel" placeholder="Digite seu Telefone" disabled={mode} value={values.cel} onChange={handleChange} />
+                        <Input maxLength={11} type="text" name="telephone" label="telephone" placeholder="Digite seu Telefone" disabled={mode} value={values.telephone} onChange={handleChange} />
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-user" />
-                        <Input type="birth" name="birth" label="birthday" placeholder="Digite sua data de nascimento" disabled={mode} value={values.birth} onChange={handleChange} />
+                        <Input maxLength={10} type="text" name="birthDate" label="birthDateday" placeholder="Digite sua data de nascimento" disabled={mode} value={dateInputMask(values.birthDate)} onChange={handleChange} />
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-user" />
-                        <Input type="gender" name="gender" label="gender" placeholder="Sexo" disabled={mode} value={values.gender} onChange={handleChange} />
+                        <Input maxLength={1} type="sexo" name="sexo" label="sexo" placeholder="Sexo" disabled={mode} value={values.sexo} onChange={handleChange} />
                     </InputIcon>
                 </div>
             </div>

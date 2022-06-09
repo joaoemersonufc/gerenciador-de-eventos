@@ -27,7 +27,7 @@ function header() {
                     <img src="/images/history.svg" alt="relatories icon" />
                     <span>RELATÓRIOS</span>
                 </a>
-                <a>
+                <a href='/new'>
                     <BsPlusCircle/>
                     <span>CADASTRAR EVENTO</span>
                 </a>

@@ -17,16 +17,19 @@ export const ToastSuccessIcon = () => <i className="bi bi-check-circle toastSucc
 
 export const ToastService = {
   error(message: string, title?: string) {
+    toast.dismiss()
     toast.error(<ToastMsg title={title || 'ERROR'} body={message} />, {
       icon: <BiErrorCircle />,
     });
   },
   success(message: string) {
+    toast.dismiss()
     toast.success(<ToastMsg title={'SUCCESS'} body={message} />, {
       icon: <ToastSuccessIcon />,
     });
   },
   custom(message: string, title: string, icon: React.ReactNode) {
+    toast.dismiss()
     toast(<ToastMsg title={title} body={message} />, {
       icon: icon,
     });

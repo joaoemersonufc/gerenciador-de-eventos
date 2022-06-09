@@ -25,11 +25,19 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
 
     const getSignIn = useCallback((data: ISignIn) => {
         setIsLoading(true);
-        api.post<ISignIn>(`/users/auth`, data,)
-            .then(() => {
+        api.post<ISignIn>(`/users/auth`, data)
+            .then((response) => {
                 ToastService.success('SUCCESS_OPERATION');
                 // push('/passive-transponder/list');
                 setIsSigned(true);
+                const { token, ...user } = response.data;
+
+                if (token) {
+                    localStorage.setItem('@EventsManager:token', token);
+                    localStorage.setItem('@EventsManager:user', JSON.stringify(user));
+                }
+
+                api.defaults.headers.common['Authorization'] = `${token}`;
             })
             .catch((reason) => {
                 ToastService.dealWithErrorRequest(reason);
