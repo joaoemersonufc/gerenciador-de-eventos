@@ -1,6 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
-import { AiOutlineOrderedList } from 'react-icons/ai';
 import { BsPlusCircle } from 'react-icons/bs';
 import {
     Link
@@ -19,11 +17,7 @@ function header() {
                     <img src="/images/home.svg" alt="home icon" />
                     <span>HOME</span>
                 </a>
-                <a>
-                    <AiOutlineOrderedList/>
-                    <span>HISTÓRICO</span>
-                </a>
-                <a>
+                <a href="/reports">
                     <img src="/images/history.svg" alt="relatories icon" />
                     <span>RELATÓRIOS</span>
                 </a>

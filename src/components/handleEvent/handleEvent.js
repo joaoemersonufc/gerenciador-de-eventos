@@ -1,47 +1,47 @@
 import 'font-awesome/css/font-awesome.min.css';
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
+import { FiDelete } from 'react-icons/fi';
 import DatePicker from 'rsuite/DatePicker';
 import "rsuite/dist/rsuite.min.css";
 import ptBR from 'rsuite/locales/pt_BR';
 import styled from 'styled-components';
 import { useEvent } from '../../contexts/Event/Context';
+import { validationSchema } from '../handleEvent/validationEvent';
 
-let sessions = [];
 
 export default function EventForm() {
+    const [sessions, setSessions] = useState([]);
 
     const initialValues = {
         startDate: new Date(),
         description: '',
         eventType: '',
+        price: '',
         sessions: [],
     };
 
     const { setEvent } = useEvent();
     
     const handleEvent = (e) => {
-        setEvent(e.description, e.eventType, e.sessions)
+        setEvent({description: e.description, eventType: e.eventType, sessions: sessions})
     }
 
-    const { handleSubmit, values, handleChange } = useFormik({
+    const { handleSubmit, values, handleChange, dirty, isValid } = useFormik({
+        validationSchema,
         initialValues,
         onSubmit: (e) => handleEvent(e),
     });
 
     const handleSession = (date) => {
-        if(sessions?.length){
-            if(sessions?.find(session => date === session)){
-
-                console.log(sessions)
-                sessions = sessions.filter(session => date !== session)
-                return date
-            }
+        if(sessions.length < 3){
+            setSessions([...sessions, {date}]);
         }
+    }
 
-        console.log(sessions)
-        sessions.push(date)
-        return date
+    const handleDelete = (id) => {
+        setSessions(sessions.filter((_, index) => index !== id));
     }
     
     const ranges = [
@@ -51,10 +51,31 @@ export default function EventForm() {
         }
       ];
 
+    const stringToDateTime = ( value, month ) => {
+          const date = new Date(value).toLocaleDateString('pt-BR', {
+              day: '2-digit',
+              month: month || 'long',
+              year: 'numeric',
+          });
+          const time = new Date(value).toLocaleTimeString();
+      
+          return `${date} ${time}`;
+      }
+
     return (
         <Container>
             <Content>
                 <h1>Cadastro de evento</h1>
+                <SessionsList>
+                    {sessions.map((s, index) => {
+                        return (
+                            <Sessions>
+                                {stringToDateTime(new Date(s.date))}
+                                <FiDelete style={{color: '#fff', fontSize: '20px', cursor: 'pointer'}} onClick={() => handleDelete(index)}/> 
+                            </Sessions>
+                        )
+                    })}
+                </SessionsList>
                 <Form onSubmit={handleSubmit}>
                     <div>
                         <div>
@@ -76,10 +97,14 @@ export default function EventForm() {
                             <InputIcon>
                                 <TextArea name="description" placeholder="Digite uma descrição para o evento" value={values.description} onChange={handleChange} />
                             </InputIcon>
-                            {sessions?.length > 0 ? sessions.map(session => <Session>{session}</Session>) : <></>}
+                            <InputIcon>
+                                <Input name="price" type="number" placeholder="Digite uma preço para os tickets do evento" value={values.price} onChange={handleChange} />
+                            </InputIcon>
                         </div>
                     </div>
-                    <Button>Cadastrar</Button>
+                    <ButtonList>
+                        <Button disabled={!dirty || !isValid}>Cadastrar</Button>
+                    </ButtonList>
                 </Form>
             </Content>
         </Container>
@@ -114,18 +139,57 @@ const Container = styled.div`
     }
 `
 
-const Session = styled.div`
-    padding: 20px;
-    width: 150px;
-    width: 150px;
+const ButtonList = styled.div`
     display: flex;
-    flex-direction: column;
-    background: rgba(0,0,0,0.8);
+    flex-flow: row;
+    width: 100%;
+    button{
+        border-radius: 10px;
+        margin: 15px;
+        
+        :hover{
+            border: 1px solid #fff;
+            color: #fff;
+            background-color: #090b13;
+        }
+
+        &.clicked{
+            border: 1px solid #fff;
+            color: #fff;
+            background-color: #090b13;
+        }
+    }
+`;
+
+const SessionsList = styled.div`
+    width: 100%;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+`
+
+const Sessions = styled.div`
+    padding: 20px;
+    width: 50%;
+    margin-top: 10px;
+    margin: 10px;
+    display: flex;
+    color: #fff;
+    align-items: center;
+    flex-direction: row;
+    background-color: #090b13;
     border-radius: 10px;
     overflow: hidden;
+    justify-content: space-between;
+    font-size: 12px;
+
+    svg{ 
+        padding-left: 5px;
+    }
 
     @media (max-width: 900px) {
         width: 90%;
+        flex-direction: column;
     }
 `
 
@@ -232,6 +296,11 @@ const Button = styled.button`
     // letter-spacing: 1.5px;
     margin-top: 8px;
     margin-bottom: 12px;
+
+    &:disabled {
+        background-color: #c4c4c4;
+        pointer-events: none;
+    }
 
     &:hover {
         background: #0483ee;

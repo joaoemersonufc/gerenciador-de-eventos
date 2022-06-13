@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Event } from '../../contexts/Event';
 import { Login } from '../../contexts/Login';
+import { Reports } from '../../contexts/Reports';
 
 type ProvidersProps = {
     children: ReactNode;
@@ -8,8 +9,10 @@ type ProvidersProps = {
 
 export function Providers({ children }: ProvidersProps): JSX.Element {
     return (
-        <Event>
-            <Login>{children}</Login>
-        </Event>
+        <Reports>
+            <Event>
+                <Login>{children}</Login>
+            </Event>
+        </Reports>
     );
 }

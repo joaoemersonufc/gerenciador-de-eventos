@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   BrowserRouter as Router, Route, Switch
 } from "react-router-dom";
@@ -12,6 +11,7 @@ import EventForm from './components/handleEvent/handleEvent';
 import Header from './components/header/header';
 import Home from './components/home/home';
 import Login from './components/login/login';
+import Report from "./components/report/report";
 import Ticket from './components/ticket/ticket';
 import { Providers } from './routes/providers';
 
@@ -23,6 +23,9 @@ function App() {
         <Providers>
           <Header/>
           <Switch>
+            <Route path="/reports">
+              <Report />
+            </Route>
             <Route path="/login">
               <Login />
             </Route>
