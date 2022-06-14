@@ -18,14 +18,23 @@ export default function EventForm() {
         startDate: new Date(),
         description: '',
         eventType: '',
-        price: '',
+        placeId: null,
+        fullTicketValue: null,
         sessions: [],
     };
 
     const { setEvent } = useEvent();
     
     const handleEvent = (e) => {
-        setEvent({description: e.description, eventType: e.eventType, sessions: sessions})
+        const newSessions = sessions.map(s => {
+            const formatDate = new Date (s.date);
+            const day = formatDate.getDate() < 10 ? `0${formatDate.getDate()}` : formatDate.getDate();
+            const month = (formatDate.getMonth() + 1) < 10 ? `0${formatDate.getMonth() + 1}` : formatDate.getMonth() + 1;
+            const year  = formatDate.getFullYear();
+            const date = `${year}-${month}-${day}`;
+            
+        s.placeId = e.placeId; s.fullTicketValue = e.fullTicketValue; s.date = `${date} ${formatDate.toString().split(' ')[4]}`; return s})
+        setEvent({description: e.description, eventType: e.eventType, sessions: newSessions})
     }
 
     const { handleSubmit, values, handleChange, dirty, isValid } = useFormik({
@@ -97,13 +106,14 @@ export default function EventForm() {
                             <InputIcon>
                                 <TextArea name="description" placeholder="Digite uma descrição para o evento" value={values.description} onChange={handleChange} />
                             </InputIcon>
-                            <InputIcon>
-                                <Input name="price" type="number" placeholder="Digite uma preço para os tickets do evento" value={values.price} onChange={handleChange} />
+                            <InputIcon className='row'>
+                                <Input name="fullTicketValue" type="number" placeholder="Digite um preço para os tickets do evento" value={values.fullTicketValue} onChange={handleChange} />
+                                <Input name="placeId" type="number" placeholder="Digite o número de lugares do evento" value={values.placeId} onChange={handleChange} />
                             </InputIcon>
                         </div>
                     </div>
                     <ButtonList>
-                        <Button disabled={!dirty || !isValid}>Cadastrar</Button>
+                        <Button disabled={!dirty || !isValid || !values.placeId || !values.fullTicketValue}>Cadastrar</Button>
                     </ButtonList>
                 </Form>
             </Content>
@@ -215,6 +225,15 @@ const InputIcon = styled.div`
         text-align: center;
         color: rgb(249,249,249,0.8);
     }
+
+    &.row{
+        display: flex;
+        flex-flow: row;
+
+        input{
+            margin: 5px;
+        }
+    }
 `
 
 const InputDate = styled.div`
@@ -256,6 +275,16 @@ const Input = styled.input`
         color: white;
         outline: white;
         border: 1px solid #fff;
+    }
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+    /* Firefox */
+    &[type=number] {
+    -moz-appearance: textfield;
     }
 `
 
