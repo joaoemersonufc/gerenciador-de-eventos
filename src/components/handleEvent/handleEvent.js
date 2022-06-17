@@ -124,7 +124,6 @@ export default function EventForm() {
 
 const Container = styled.div`
     position: relative;
-    height: calc(100vh - 140px);
     display:flex;
     align-items: center;
     justify-content: center;
@@ -206,6 +205,7 @@ const Sessions = styled.div`
 const Content = styled.div`
     max-width: 650px;
     padding: 50px 40px;
+    margin: 50px;
     width: 80%;
     display: flex;
     flex-direction: column;

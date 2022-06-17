@@ -1,7 +1,7 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { eventData } from "../../data/data.js";
+import { useEvent } from '../../contexts/Event/Context';
 import ScreeningDetails from './eventing_details/eventing_details';
 import EventDetails from './event_details/event_details';
 
@@ -13,12 +13,18 @@ function setZoom() {
 }
 
 const Event = () => {
+    const { getEventById, eventById } = useEvent();
     const { event_id } = useParams();
-    setZoom()
+    setZoom();
+
+    useEffect(() => {
+        getEventById(event_id)
+    }, [event_id])
+
     return (
         <Container>
-            <EventDetails event={eventData[event_id-1]} />
-            <ScreeningDetails event={eventData[event_id-1]} /> 
+            <EventDetails event={eventById} />
+            <ScreeningDetails event={eventById} /> 
         </Container>
     )
 }

@@ -1,12 +1,21 @@
-import React from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import styled from 'styled-components';
-import { eventData } from "./../../../data/data.js";
+import { useEvent } from '../../../contexts/Event/Context';
+// import { eventData } from "./../../../data/data.js";
 
 function slider() {
+
+    const { getEvent, eventList } = useEvent();
+
+    useEffect(() => {
+        getEvent();
+    }, [])
+
     let settings = {
         dots: true,
         infinite: true,
@@ -18,21 +27,18 @@ function slider() {
 
     return (
         <Carousel {...settings}>
-            <Link to={'/event/'+eventData[0]["id"]}>
-                <Wrap>
-                    <img src="/images/banner1.jpg" alt={eventData[0]["name"]} />
-                </Wrap>
-            </Link>
-            <Link to={'/event/'+eventData[1]["id"]}>
-                <Wrap>
-                    <img src="/images/banner2.png" alt={eventData[1]["name"]} />
-                </Wrap>
-            </Link>
-            <Link to={'/event/'+eventData[2]["id"]}>
-                <Wrap>
-                    <img src="/images/banner3.jpg" alt={eventData[2]["name"]} />
-                </Wrap>
-            </Link>
+            {eventList.map((event, index) =>  
+            {
+                if(index > 3) return;
+                return(
+                    <Link to={'/event/'+event.id_evento}>
+                        <Wrap>
+                            <img src='https://st.depositphotos.com/56480434/54377/v/450/depositphotos_543770714-stock-illustration-ticket-pass-event-voucher-solid.jpg' alt={event.ds_evento} />
+                        </Wrap>
+                    </Link>
+                )
+            }
+            )}
         </Carousel>
     )
 }

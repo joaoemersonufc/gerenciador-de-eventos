@@ -1,8 +1,9 @@
 import 'font-awesome/css/font-awesome.min.css';
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useLogin } from '../../contexts/Login/Context';
+import { validationSchema } from './singUpEvent';
 
 function Login() {
     const [mode, toggleMode] = useState(true);
@@ -41,7 +42,8 @@ function LoginForm({mode}) {
 
     const { getSignIn, getSignUp } = useLogin();
 
-    const { handleSubmit, values, handleChange } = useFormik({
+    const { handleSubmit, values, handleChange, dirty, isValid } = useFormik({
+        validationSchema: !mode && validationSchema, 
         initialValues,
         onSubmit: mode ? getSignIn : getSignUp,
     });
@@ -57,7 +59,6 @@ function LoginForm({mode}) {
     const dateInputMask = (elm) => {
           var len = elm?.length;
           if(len === 2) {
-              console.log('oi')
             return elm += '/';
           }
           if(len === 5) {
@@ -113,7 +114,7 @@ function LoginForm({mode}) {
                     </InputIcon>
                 </div>
             </div>
-                <Button onSubmit={handleSubmit}>{mode ? 'Entrar' : 'Cadastrar'}</Button>
+                <Button onSubmit={handleSubmit} disabled={!isValid || !dirty}>{mode ? 'Entrar' : 'Cadastrar'}</Button>
         </Form>
     )
 
@@ -121,7 +122,6 @@ function LoginForm({mode}) {
 
 const Container = styled.div`
     position: relative;
-    height: calc(100vh - 140px);
     display:flex;
     align-items: center;
     justify-content: center;
@@ -144,6 +144,7 @@ const Container = styled.div`
 const Content = styled.div`
     max-width: 650px;
     padding: 50px 40px;
+    margin: 50px;
     width: 80%;
     display: flex;
     flex-direction: column;
@@ -201,6 +202,11 @@ const Button = styled.button`
 
     &:hover {
         background: #0483ee;
+    }
+
+    &:disabled {
+        background-color: #c4c4c4;
+        pointer-events: none;
     }
 `
 

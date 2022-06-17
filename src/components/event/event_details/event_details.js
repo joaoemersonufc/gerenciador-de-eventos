@@ -1,43 +1,35 @@
 import 'font-awesome/css/font-awesome.min.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReactPlayer from 'react-player';
-import { Link } from "react-router-dom";
 import styled from 'styled-components';
 
 const EventDetails = (props) => {
     const [mute, setMute] = useState(true);
-
+    
     return (
         <Container>
             <Details>
                 <h1>
-                    {props.event.name}
+                    {props.event?.nm_evento}
                 </h1>
                 <SubTitle>
-                    {props.event.lang} • {props.event.duration}m • Evento
+                    {props.event?.ds_tipoevento}
                 </SubTitle>
                 <Description>
-                    {props.event.desc}
+                    {props.event?.ds_evento}
                 </Description>
-                {props.event.id !== 3 ? 
-                <Link to={'/booking/'+props.event.id} style={{"text-decoration":"none"}}>
-                    <BookTicket>
-                        <img src="/images/ticket.png" alt="" />
-                        <span>COMPRAR INGRESSOS</span>
-                    </BookTicket>
-                </Link> 
-                :
-                <Link style={{"text-decoration":"none", "pointer-events": "none"}}>
-                    <BookTicket>
-                        <img src="/images/ticket.png" alt="" />
-                        <span>EVENTO ENCERRADO</span>
-                    </BookTicket>
-                </Link> 
-                }
+                {/* {props.event?.status !== 'ACTIVE' &&
+                // <Link style={{"text-decoration":"none", "pointer-events": "none"}}>
+                //     <BookTicket>
+                //         <img src="/images/ticket.png" alt="" />
+                //         <span>EVENTO ENCERRADO</span>
+                //     </BookTicket>
+                // </Link> 
+                 */}
             </Details>
             <Trailer>
                 <EventTrailerPlayer>
-                    <ReactPlayer id='EventTrailer' url={props.event.trailer} playing={true} loop={true} muted={mute} controls={false} width='100%' height='100%' />
+                    <ReactPlayer id='EventTrailer' url={'https://www.youtube.com/watch?v=yXYWKVxCCi4&list=PLV7Jk0Kn2Y0WGA8hk_2ZwcymeZaDyyDmN&index=27'} playing={true} loop={true} muted={mute} controls={false} width='100%' height='100%' />
                     <UnMute onClick={() => setMute(!mute)}>
                         <img src={mute ? "/images/muted.png" : "/images/unmuted.png"} alt="Unmute" />
                     </UnMute>
@@ -69,6 +61,11 @@ const Details = styled.div`
 
     @media (max-width: 900px) {
         width: 100%;
+    }
+
+    h1{
+        font-size: 24px;
+        color: #fff;
     }
 `
 

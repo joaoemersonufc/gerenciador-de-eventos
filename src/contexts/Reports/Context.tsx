@@ -20,7 +20,7 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
         setIsLoading(true);
         api.post(`/reports`, data)
             .then((response) => {
-                ToastService.success('SUCCESS_OPERATION');
+                ToastService.success('Operação bem-sucedida');
             })
             .catch((reason) => {
                 ToastService.dealWithErrorRequest(reason);

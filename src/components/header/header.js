@@ -7,6 +7,9 @@ import styled from 'styled-components';
 
 
 function header() {
+
+    const role = localStorage.getItem('@EventsManager:role');
+    console.log(role)
     return (
         <Nav>
             <Link to="/" style={{"text-decoration":"none"}}>
@@ -17,14 +20,18 @@ function header() {
                     <img src="/images/home.svg" alt="home icon" />
                     <span>HOME</span>
                 </a>
-                <a href="/reports">
-                    <img src="/images/history.svg" alt="relatories icon" />
-                    <span>RELATÓRIOS</span>
-                </a>
-                <a href='/new'>
-                    <BsPlusCircle/>
-                    <span>CADASTRAR EVENTO</span>
-                </a>
+                {role === '1' && (
+                    <>
+                        <a href="/reports">
+                            <img src="/images/history.svg" alt="relatories icon" />
+                            <span>RELATÓRIOS</span>
+                        </a>
+                        <a href='/new'>
+                            <BsPlusCircle/>
+                            <span>CADASTRAR EVENTO</span>
+                        </a>
+                    </>
+                )}
             </NavMenu>
             <Link to="/login">
                 <UserImg src="/images/profile.jpg" alt="user icon" />

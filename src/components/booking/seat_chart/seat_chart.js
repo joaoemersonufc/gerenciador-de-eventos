@@ -6,23 +6,22 @@ class seat_chart extends React.Component {
     constructor() {
       super();
         this.state = {
-        seat: [
-          ['1','2','3', '4', '5', '6', '7', '8', '9', '10'],
-          ['11','12','13', '14', '15', '16', '17', '18', '19', '20'],
-          ['21','22','23', '24', '25', '26', '27', '28', '29', '30'],
-          ['31','32','33', '34', '35', '36', '37', '38', '39', '40'],
-          ['41','42','43', '44', '45', '46', '47', '48', '49', '50']
-        ],
-        seatAvailable: [
-          ['1','2','3', '4', '5', '6', '7', '8', '9', '10'],
-          ['11','12','13', '14', '15', '16', '17', '18', '19', '20'],
-          ['21','22','23', '24', '25', '26', '27', '28', '29', '30'],
-          ['31','32','33', '34', '35', '36', '37', '38', '39', '40'],
-          ['41','42','43', '44', '45', '46', '47', '48', '49', '50']
-        ],
+        seat: [],
+        seatAvailable: [],
         seatReserved: [],
-        seatUnavailable: ['12', '13', '14'],
+        seatUnavailable:[]
       }
+    }
+
+    componentDidMount(){
+      setTimeout(() => {
+        this.setState({
+        seat: [this.props?.seats?.seatsAvailability?.map(seats => seats.seatKey)],
+        seatAvailable: [this.props?.seats?.seatsAvailability?.map(seats => seats.available === true && seats.seat)],
+        seatReserved: [],
+        seatUnavailable:[ this.props?.seats?.seatsAvailability?.map(seats => seats.available !== true && seats.seat)]
+      })
+      }, 1000);
     }
     
     onClickData(seat) {
@@ -40,6 +39,7 @@ class seat_chart extends React.Component {
     }
     
     render() {
+      localStorage.setItem('@seats', this.state.seatReserved);
       return (
         <div>
           <h4>Reserve seu lugar</h4>
@@ -63,9 +63,9 @@ class seat_chart extends React.Component {
          <div className="container">
           <table className="grid">
             <tbody>
-              { this.props.seat.map((numList,i) => (
+              { this.props?.seat?.map((numList,i) => (
                 <tr key={i}>
-                { numList.map ( seat_no =>
+                { numList?.map ( seat_no =>
                   <td 
                     className={this.props.unavailable.indexOf(seat_no) > -1? 'unavailable': this.props.reserved.indexOf(seat_no) > -1? 'reserved': 'available'}
                     key={seat_no} onClick = {e => this.onClickSeat(seat_no)}>{seat_no} 

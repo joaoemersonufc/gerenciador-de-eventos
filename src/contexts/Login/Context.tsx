@@ -27,14 +27,20 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
         setIsLoading(true);
         api.post<ISignIn>(`/users/auth`, data)
             .then((response) => {
-                ToastService.success('SUCCESS_OPERATION');
-                // push('/passive-transponder/list');
+                ToastService.success('Operação bem-sucedida');
+                push('/');
                 setIsSigned(true);
                 const { token, ...user } = response.data;
 
                 if (token) {
                     localStorage.setItem('@EventsManager:token', token);
                     localStorage.setItem('@EventsManager:user', JSON.stringify(user));
+                    var base64Url = token.split('.')[1];
+                    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    }).join(''));
+                    localStorage.setItem('@EventsManager:role', JSON.parse(jsonPayload).lvl);
                 }
 
                 api.defaults.headers.common['Authorization'] = `${token}`;
@@ -53,8 +59,8 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
             api
                 .post(`/users`, data)
                 .then(() => {
-                    ToastService.success('SUCCESS_OPERATION');
-                    // push('/passive-transponder/list');
+                    ToastService.success('Operação bem-sucedida');
+                    window.location.reload();
                 })
                 .catch((reason) => {
                     ToastService.dealWithErrorRequest(reason);

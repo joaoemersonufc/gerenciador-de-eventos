@@ -1,36 +1,22 @@
 import moment from "moment";
 import 'moment/locale/pt-br';
-import React from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 
 const ScreeningDetails = (props) => {
-    const now = moment();
+    const now = moment(new Date(props.event?.dt_cadastro));
 
     return (
         <Container>
             <h4>Detalhes do evento</h4>
             <Content>
-                <Link to={'/booking/'+props.event.id} style={{"text-decoration": "none"}}>
-                    <Wrap>
-                        <span>10:00 {now.add(1,'days').format('DD MMM')}</span>
-                    </Wrap>
-                </Link>
-                <Link to={'/booking/'+props.event.id} style={{"text-decoration": "none"}}>
-                    <Wrap>
-                        <span>08:00 {now.add(1,'days').format('DD MMM')}</span>
-                    </Wrap>
-                </Link>
-                <Link to={'/booking/'+props.event.id} style={{"text-decoration": "none"}}>
-                    <Wrap>
-                        <span>10:00 {now.add(2,'days').format('DD MMM')}</span>
-                    </Wrap>
-                </Link>
-                <Link to={'/booking/'+props.event.id} style={{"text-decoration": "none"}}>
-                    <Wrap>
-                        <span>08:00 {now.add(2,'days').format('DD MMM')}</span>
-                    </Wrap>
-                </Link>
+                {props.event?.sessoes?.map(session => 
+                    <Link to={'/booking/'+props.event?.id_evento+'?'+session?.id_sessao} style={{"text-decoration": "none"}}>
+                        <Wrap>
+                            <span>{session?.dt_sessao?.split('T')[1].substring(0,5)} {now.format('DD MMM')}</span>
+                        </Wrap>
+                    </Link>
+                )}
             </Content>
         </Container>
     )
@@ -39,18 +25,22 @@ const ScreeningDetails = (props) => {
 export default ScreeningDetails
 
 const Container = styled.div`
-    margin-top: 30px;
+    margin-top: 10px;
     padding: 30px 0px 26px;
     @media (max-width: 900px) {
         margin-bottom: 30px;
+    }
+
+    h4{
+        margin-bottom: 15px;
     }
 `
 
 const Content = styled.div`
     display: flex;
     grid-gap: 25px;
-    overflow-X:auto;
-    padding-left:5px;
+    overflow-X: auto;
+    padding-left: 5px;
     @media (max-width: 900px) {
         font-size: 12px;
     }
@@ -63,8 +53,8 @@ const Content = styled.div`
 const Wrap = styled.div`
     border-radius: 10px;
     cursor: pointer;
+    background-color: #090b13;
     border: 3px solid rgba(249, 249, 249, 0.1);
-    box-shadow: rgba(0 0 0 / 69%) 0px 26px 30px -10px,
     rgba(0 0 0 / 73%) 0px 16px 10px -10px;
     transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
     text-align: center;
@@ -75,8 +65,6 @@ const Wrap = styled.div`
     
     &:hover {
         transform: scale(1.05);
-        box-shadow: rgba(0 0 0 / 80%) 0px 40px 58px -16px,
-        rgba(0 0 0 / 72%) 0px 30px 22px -10px;
         border-color: rgba(249, 249, 249, 0.8);
     }
 

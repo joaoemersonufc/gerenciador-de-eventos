@@ -1,18 +1,27 @@
-import React from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import { eventData } from "../../../data/data.js";
+// import { eventData } from "../../../data/data.js";
+import { useEvent } from '../../../contexts/Event/Context';
 
 function events_list() {
+
+    const { getEvent, eventList } = useEvent();
+
+    useEffect(() => {
+        getEvent();
+    }, [])
+
     return (
         <Container>
             <h4>Eventos em breve</h4>
             <Content>
-                {eventData.map((event) => {
+                {eventList.map((event) => {
                     return (
-                        <Link to={'/event/'+event.id}>
+                        <Link to={'/event/'+event.id_evento}>
                             <Wrap>
-                                <img src={event.poster} alt={event.name} />
+                                <img src={'https://st.depositphotos.com/56480434/54377/v/450/depositphotos_543770714-stock-illustration-ticket-pass-event-voucher-solid.jpg'} alt={event.ds_evento} />
                             </Wrap>
                         </Link>
                     );
@@ -28,6 +37,11 @@ export default events_list
 const Container = styled.div`
     margin-top: 10px;
     padding: 30px 0px 26px;
+
+    h4{
+        margin-bottom: 15px;
+        color: #fff;
+    }
 `
 
 const Content = styled.div`

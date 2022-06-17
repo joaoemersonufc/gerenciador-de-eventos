@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import { ticket } from '../../ticket_template/ticket';
 
@@ -52,6 +52,11 @@ const Container = styled.main`
     padding: 0 calc(3.5vw + 5px);
     position: relative;
     overflow-x: hidden;
+
+    h1, h3{
+        color: #fff;
+    }
+
 `
 const TicketSection = styled.div`
     margin-top: 40px;

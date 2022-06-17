@@ -2,15 +2,16 @@
 import styled from 'styled-components'
 
 const CondensedEventDetails = (props) => {
+
     return (
         <Container>
             <img src="/images/icone-ticket.png" alt="event icon" />
             <Details>
                 <h1>
-                    {props.event.name}
+                    {props.event?.nm_evento}
                 </h1>
                 <SubTitle>
-                    {props.event.lang} • {props.event.duration}m • Evento
+                    {props.event?.ds_tipoevento}
                 </SubTitle>
             </Details>
         </Container>

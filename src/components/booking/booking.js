@@ -1,10 +1,11 @@
-import React from 'react'
-import { Link, useParams } from "react-router-dom"
-import styled from 'styled-components'
-import { eventData } from "./../../data/data.js"
-import CondensedEventDetails from './condensed_event_details/condensed_event_details'
-import ScreeningDetails from './screening_details/screening_details'
-import SeatChart from './seat_chart/seat_chart'
+import { useEffect, useState } from 'react';
+import { useHistory, useParams } from "react-router-dom";
+import styled from 'styled-components';
+import { useEvent } from '../../contexts/Event/Context';
+import CondensedEventDetails from './condensed_event_details/condensed_event_details';
+import PaymentForms from './payment_forms/payment_forms';
+import ScreeningDetails from './screening_details/screening_details';
+import SeatChart from './seat_chart/seat_chart';
 
 function setZoom() {
     if (navigator.appVersion.indexOf("Win") !== -1)
@@ -14,27 +15,38 @@ function setZoom() {
 }
 
 const Booking = () => {
+    let history = useHistory();
+    const [places, setPlaces] = useState({})
+    const { getEventById, eventById, getAvaliableSeats, avaliableSeats } = useEvent();
     const { event_id } = useParams();
-    const booking_id = Math.floor(1000 + Math.random() * 9000);
     setZoom()
+
+    useEffect(() => {
+        getEventById(event_id);
+        getAvaliableSeats(event_id, window.location.href.split('?')[1]);
+    }, [event_id]);
+
+    useEffect(() => {
+        setPlaces(avaliableSeats)
+    }, [avaliableSeats])
+    
     return (
         <Container>
             <BookingSection>
-                <CondensedEventDetails event={eventData[event_id-1]} />
-                <ScreeningDetails event={eventData[event_id-1]} />
-                <SeatChart />
+                <CondensedEventDetails event={eventById} />
+                <ScreeningDetails sessions={eventById?.sessoes} session={window.location.href.split('?')[1]} />
+                <PaymentForms />
+                <SeatChart seats={places}/>
                 <BookButton>
-                    <Link to={'/ticket/'+booking_id} style={{"text-decoration":"none"}}>
-                        <BookTicket>
-                            <img src="/images/ticket.png" alt="" />
-                            <span>GARANTA SEU INGRESSO</span>
-                        </BookTicket>
-                    </Link>
+                    <BookTicket onClick={() => localStorage.getItem('@EventsManager:token') ? history?.push('/ticket/'+event_id+'?'+window.location.href.split('?')[1]) : history?.push('/login') }>
+                        <img src="/images/ticket.png" alt="" />
+                        <span>GARANTA SEU INGRESSO</span>
+                    </BookTicket>
                 </BookButton>
             </BookingSection>
             <EventPoster>
                 <Wrap>
-                    <img src={eventData[event_id-1]["poster"]} alt={eventData[event_id-1]["name"]} />
+                    <img src={'https://st.depositphotos.com/56480434/54377/v/450/depositphotos_543770714-stock-illustration-ticket-pass-event-voucher-solid.jpg'} alt={eventById.ds_evento} />
                 </Wrap>
             </EventPoster>
         </Container>

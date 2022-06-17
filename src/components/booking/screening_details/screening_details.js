@@ -1,31 +1,15 @@
-import moment from 'moment';
 import styled from 'styled-components';
 
-function screening_details() {
-    const now = moment();
+const ScreeningDetails = (props) => {
+    const session = props.sessions?.find(sess => sess.dt_sessao?.includes(props?.session))
 
     return (
         <Container>
-            <h4>Selecione um assento</h4>
+            <h4>Sessão selecionada</h4>
             <Content>
                 <Screening>
-                <Wrap>
-                        <span>10:00 {now.add(1,'days').format('DD MMM')}</span>
-                    </Wrap>
-                </Screening>
-                <Screening>
                     <Wrap>
-                        <span>08:00 {now.add(1,'days').format('DD MMM')}</span>
-                    </Wrap>
-                </Screening>
-                <Screening>
-                    <Wrap>
-                        <span>10:00 {now.add(2,'days').format('DD MMM')}</span>
-                    </Wrap>
-                </Screening>
-                <Screening>
-                    <Wrap>
-                        <span>08:00 {now.add(2,'days').format('DD MMM')}</span>
+                        <span>{session?.dt_sessao?.split('T')[1].substring(0,5)}</span>
                     </Wrap>
                 </Screening>
             </Content>
@@ -33,7 +17,7 @@ function screening_details() {
     )
 }
 
-export default screening_details
+export default ScreeningDetails
 
 const Container = styled.div`
     padding: 30px 0px 26px;
