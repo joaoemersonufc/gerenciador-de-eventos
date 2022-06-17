@@ -41,7 +41,8 @@ export const ToastService = {
         return;
       }
       if (res.response.status === 401) {
-        ToastService.error(res.response.data.error);
+        ToastService.error(res.response.data.message);
+        window.location.href = '/login';
         return;
       }
       return ToastService.error(res.response.data?.message);

@@ -1,6 +1,6 @@
 import 'font-awesome/css/font-awesome.min.css';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FiDelete } from 'react-icons/fi';
 import DatePicker from 'rsuite/DatePicker';
@@ -17,13 +17,14 @@ export default function EventForm() {
     const initialValues = {
         startDate: new Date(),
         description: '',
+        name: '',
         eventType: '',
         placeId: null,
         fullTicketValue: null,
         sessions: [],
     };
 
-    const { setEvent } = useEvent();
+    const { setEvent, getPlaces, places } = useEvent();
     
     const handleEvent = (e) => {
         const newSessions = sessions.map(s => {
@@ -33,8 +34,8 @@ export default function EventForm() {
             const year  = formatDate.getFullYear();
             const date = `${year}-${month}-${day}`;
             
-        s.placeId = e.placeId; s.fullTicketValue = e.fullTicketValue; s.date = `${date} ${formatDate.toString().split(' ')[4]}`; return s})
-        setEvent({description: e.description, eventType: e.eventType, sessions: newSessions})
+        s.placeId = Number(e.placeId); s.fullTicketValue = e.fullTicketValue; s.date = `${date} ${formatDate.toString().split(' ')[4]}`; return s})
+        setEvent({description: e.description, name: e.name, eventType: e.eventType, sessions: newSessions})
     }
 
     const { handleSubmit, values, handleChange, dirty, isValid } = useFormik({
@@ -69,7 +70,11 @@ export default function EventForm() {
           const time = new Date(value).toLocaleTimeString();
       
           return `${date} ${time}`;
-      }
+    }
+
+    useEffect(() => {
+        getPlaces();
+    }, [])
 
     return (
         <Container>
@@ -101,6 +106,9 @@ export default function EventForm() {
                                 />
                             </InputDate>
                             <InputIcon>
+                                <Input type="name" name="name" placeholder="Qual o nome de evento?" value={values.name} onChange={handleChange} />
+                            </InputIcon>
+                            <InputIcon>
                                 <Input type="eventType" name="eventType" placeholder="Qual o tipo de evento?" value={values.eventType} onChange={handleChange} />
                             </InputIcon>
                             <InputIcon>
@@ -108,7 +116,11 @@ export default function EventForm() {
                             </InputIcon>
                             <InputIcon className='row'>
                                 <Input name="fullTicketValue" type="number" placeholder="Digite um preço para os tickets do evento" value={values.fullTicketValue} onChange={handleChange} />
-                                <Input name="placeId" type="number" placeholder="Digite o número de lugares do evento" value={values.placeId} onChange={handleChange} />
+                                <select name="placeId"placeholder="Selecione o local" value={values.placeId} onChange={handleChange} >
+                                    {places.map(place => 
+                                        <option value={Number(place.nr_assentos)}>{place.ds_local}</option>
+                                    )}
+                                </select>
                             </InputIcon>
                         </div>
                     </div>
@@ -233,6 +245,14 @@ const InputIcon = styled.div`
         input{
             margin: 5px;
         }
+    }
+
+    select{
+        margin: 5px;
+        width: 200px;
+        color: #fff;
+        border: 1px solid rgba(255,255,255,.1);
+        background: #333;
     }
 `
 

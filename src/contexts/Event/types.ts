@@ -2,6 +2,7 @@
 
 export type IEvent = {
 	description: string,
+	name: string,
 	eventType: string,
 	sessions: ISession[],
 };

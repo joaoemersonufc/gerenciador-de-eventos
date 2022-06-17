@@ -25,6 +25,9 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
 
     const getSignIn = useCallback((data: ISignIn) => {
         setIsLoading(true);
+        localStorage.removeItem('@EventsManager:token');
+        localStorage.removeItem('@EventsManager:user');
+        localStorage.removeItem('@EventsManager:role');
         api.post<ISignIn>(`/users/auth`, data)
             .then((response) => {
                 ToastService.success('Operação bem-sucedida');

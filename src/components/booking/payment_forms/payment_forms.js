@@ -6,13 +6,16 @@ function PaymentForms() {
     const { values, handleChange } = useFormik({
         initialValues: {
             paymentForms: 'cartao',
+            typeTicket: 'inteira',
             parcelas: '1',
         },
     });
 
     localStorage.setItem('@paymentForms', values.paymentForms);
+    localStorage.setItem('@typeTicket', values.typeTicket);
 
     return (
+        <>
         <Container>
             <h4>Selecione uma forma de pagamento</h4>
             <Content>
@@ -68,6 +71,21 @@ function PaymentForms() {
                 </select> : <></>}
             </Content>
         </Container>
+        
+        <Container>
+            <h4>Selecione o tipo de entrada</h4>
+            <Content>
+                <select name="type" onChange={handleChange} value={values.typeTicket}>
+                    <option value="inteira">
+                        Inteira
+                    </option>
+                    <option value="meia">
+                        Meia
+                    </option>
+                </select>
+            </Content>
+        </Container>
+        </>
     )
 }
 

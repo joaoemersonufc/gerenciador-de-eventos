@@ -10,6 +10,7 @@ type PassiveTransponderProviderProps = {
 
 type PassiveTransponderContextData = {
     getEvent: () => void;
+    getPlaces: () => void;
     getAvaliableSeats: (event_id: string, session_id: string) => void;
     setEvent: (data: IEvent) => void;
 };
@@ -18,6 +19,7 @@ const PassiveTransponderContext = createContext({} as PassiveTransponderContextD
 
 export function PassiveTransponderProvider({ children }: PassiveTransponderProviderProps): JSX.Element {
     const [isLoading, setIsLoading] = useState(false);
+    const [places, setPlaces] = useState([]);
     const [eventList, setEventList] = useState([] as IEventList[]);
     const [eventById, setEventById] = useState({} as IEventList);
     const [avaliableSeats, setAvaliableSeats] = useState({} as ISeats);
@@ -78,13 +80,29 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
             });
     }, []);
 
+    const getPlaces = useCallback(() => {
+        setIsLoading(true);
+        api.get(`/places`, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('@EventsManager:token') || '' } })
+            .then((response) => {
+                setPlaces(response.data)
+            })
+            .catch((reason) => {
+                ToastService.dealWithErrorRequest(reason);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, []);
+
     const data = useMemo(() => {
         return {
             setEvent,
             getEventById,
             getEvent,
             getAvaliableSeats,
+            getPlaces,
             avaliableSeats,
+            places,
             eventList,
             eventById,
             isLoading
@@ -94,6 +112,7 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
         eventById,
         getAvaliableSeats,
         avaliableSeats,
+        places,
         isLoading
     ]);
 
