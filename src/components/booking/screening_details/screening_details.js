@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const ScreeningDetails = (props) => {
-    const session = props.sessions?.find(sess => sess.dt_sessao?.includes(props?.session))
+    const session = props.sessions?.find(sess => sess.id_sessao == props?.session)
 
     return (
         <Container>

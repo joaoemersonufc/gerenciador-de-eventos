@@ -33,6 +33,7 @@
 
 .unavailable {
   display: inline-block;
+  color: #fff;
   background-color: #cd5c5c;
   pointer-events: none;
 }

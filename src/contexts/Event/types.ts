@@ -14,6 +14,23 @@ export type IEventList = {
 	ds_tipoevento: string
 };
 
+export type ISales = {
+	id_usuario : null,
+	id_sessao : number,
+	nr_protocolo : number,
+	ds_formapagamento : string,
+	ds_tipovenda : string,
+	ds_nomecliente : string,	
+	ds_tipodocumento : string,
+	nr_documento : string,
+	tickets : ITicket[]
+};
+
+export type ITicket = {
+		ds_assento: string,
+		ds_tipo: string
+}
+
 export type ISeats = {
 	id_sessao: number,
 	seats: number,

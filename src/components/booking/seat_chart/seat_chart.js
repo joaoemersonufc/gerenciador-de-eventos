@@ -17,9 +17,9 @@ class seat_chart extends React.Component {
       setTimeout(() => {
         this.setState({
         seat: [this.props?.seats?.seatsAvailability?.map(seats => seats.seatKey)],
-        seatAvailable: [this.props?.seats?.seatsAvailability?.map(seats => seats.available === true && seats.seat)],
+        seatAvailable: [this.props?.seats?.seatsAvailability?.map(seats => seats.available === true && seats.seatKey)],
         seatReserved: [],
-        seatUnavailable:[ this.props?.seats?.seatsAvailability?.map(seats => seats.available !== true && seats.seat)]
+        seatUnavailable:[ this.props?.seats?.seatsAvailability?.map(seats => seats.available !== true && seats.seatKey)]
       })
       }, 1000);
     }
@@ -40,6 +40,7 @@ class seat_chart extends React.Component {
     
     render() {
       localStorage.setItem('@seats', this.state.seatReserved);
+      console.log(this.state.seatUnavailable)
       return (
         <div>
           <h4>Reserve seu lugar</h4>
@@ -66,10 +67,12 @@ class seat_chart extends React.Component {
               { this.props?.seat?.map((numList,i) => (
                 <tr key={i}>
                 { numList?.map ( seat_no =>
-                  <td 
-                    className={this.props.unavailable.indexOf(seat_no) > -1? 'unavailable': this.props.reserved.indexOf(seat_no) > -1? 'reserved': 'available'}
+                {
+                  return <td 
+                    className={this.props.unavailable[0]?.includes(seat_no) ? 'unavailable': this.props.reserved.indexOf(seat_no) > -1? 'reserved': 'available'}
                     key={seat_no} onClick = {e => this.onClickSeat(seat_no)}>{seat_no} 
                   </td>
+                }
                 )}
                 </tr>
               ))

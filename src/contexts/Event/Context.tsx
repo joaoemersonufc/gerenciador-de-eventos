@@ -2,7 +2,7 @@
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 import { ToastService } from '../../components/toast/toast';
 import { api } from '../../routes/providers/api';
-import { IEvent, IEventList, ISeats } from './types';
+import { IEvent, IEventList, ISales, ISeats } from './types';
 
 type PassiveTransponderProviderProps = {
     children: ReactNode;
@@ -11,6 +11,7 @@ type PassiveTransponderProviderProps = {
 type PassiveTransponderContextData = {
     getEvent: () => void;
     getPlaces: () => void;
+    sendSales: (data: ISales) => void;
     getAvaliableSeats: (event_id: string, session_id: string) => void;
     setEvent: (data: IEvent) => void;
 };
@@ -94,6 +95,20 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
             });
     }, []);
 
+    const sendSales = useCallback((data: ISales) => {
+        setIsLoading(true);
+        api.post<ISales>(`/sales`, data, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('@EventsManager:token') || '' } })
+            .then(() => {
+                ToastService.success('Operação bem-sucedida');
+            })
+            .catch((reason) => {
+                ToastService.dealWithErrorRequest(reason);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, []);
+
     const data = useMemo(() => {
         return {
             setEvent,
@@ -101,6 +116,7 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
             getEvent,
             getAvaliableSeats,
             getPlaces,
+            sendSales,
             avaliableSeats,
             places,
             eventList,

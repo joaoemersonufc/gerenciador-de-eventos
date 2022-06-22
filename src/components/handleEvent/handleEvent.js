@@ -118,7 +118,7 @@ export default function EventForm() {
                                 <Input name="fullTicketValue" type="number" placeholder="Digite um preço para os tickets do evento" value={values.fullTicketValue} onChange={handleChange} />
                                 <select name="placeId"placeholder="Selecione o local" value={values.placeId} onChange={handleChange} >
                                     {places.map(place => 
-                                        <option value={Number(place.nr_assentos)}>{place.ds_local}</option>
+                                        <option value={Number(place.id_local)}>{place.ds_local}</option>
                                     )}
                                 </select>
                             </InputIcon>

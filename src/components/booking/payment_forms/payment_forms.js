@@ -6,13 +6,23 @@ function PaymentForms() {
     const { values, handleChange } = useFormik({
         initialValues: {
             paymentForms: 'cartao',
-            typeTicket: 'inteira',
+            typeTicket: 'Inteira',
+            typeDocument: 'CPF',
+            numberDocument: '000.000.000-00',
             parcelas: '1',
         },
     });
 
     localStorage.setItem('@paymentForms', values.paymentForms);
     localStorage.setItem('@typeTicket', values.typeTicket);
+
+    const cpf = (v) => {
+        v=v.replace(/\D/g,"")                   
+        v=v.replace(/(\d{3})(\d)/,"$1.$2")      
+        v=v.replace(/(\d{3})(\d)/,"$1.$2")       
+        v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2") 
+        return v
+    }
 
     return (
         <>
@@ -72,19 +82,36 @@ function PaymentForms() {
             </Content>
         </Container>
         
-        <Container>
-            <h4>Selecione o tipo de entrada</h4>
-            <Content>
-                <select name="type" onChange={handleChange} value={values.typeTicket}>
-                    <option value="inteira">
-                        Inteira
-                    </option>
-                    <option value="meia">
-                        Meia
-                    </option>
-                </select>
-            </Content>
-        </Container>
+        <Row>
+            <Container>
+                <h4>Tipo de entrada</h4>
+                <Content>
+                    <select name="typeTicket" onChange={handleChange} value={values.typeTicket}>
+                        <option value="Inteira">
+                            Inteira
+                        </option>
+                        <option value="Meia">
+                            Meia
+                        </option>
+                    </select>
+                </Content>
+            </Container>
+            <Container>
+                <h4>Selecione o tipo de documento</h4>
+                <Row>
+                    <Content>
+                        <select name="typeDocument" onChange={handleChange} value={values.typeDocument}>
+                            <option value="CPF">
+                                CPF
+                            </option>
+                        </select>
+                    </Content>
+                    <Content>
+                        <input maxLength={14} name="numberDocument" onChange={handleChange} value={cpf(values.numberDocument)}/>
+                    </Content>
+                </Row>
+            </Container>
+        </Row>
         </>
     )
 }
@@ -96,6 +123,13 @@ const Container = styled.div`
     @media (max-width: 900px) {
         margin-bottom: 30px;
     }
+`
+
+const Row = styled.div`
+    display: flex;
+    flex-flow: row;
+    gap: 50px;
+    width: 100%;
 `
 
 const Content = styled.div`
@@ -111,7 +145,7 @@ const Content = styled.div`
         display: none;
     }
 
-    select{
+    select, input{
         background: #0c111b;
         color: #fff;
         height: 70px;

@@ -17,7 +17,7 @@ function setZoom() {
 const Booking = () => {
     let history = useHistory();
     const [places, setPlaces] = useState({})
-    const { getEventById, eventById, getAvaliableSeats, avaliableSeats } = useEvent();
+    const { getEventById, eventById, getAvaliableSeats, avaliableSeats, sendSales } = useEvent();
     const { event_id } = useParams();
     setZoom()
 
@@ -29,6 +29,22 @@ const Booking = () => {
     useEffect(() => {
         setPlaces(avaliableSeats)
     }, [avaliableSeats])
+
+    console.log(localStorage.getItem('@seats').split(','))
+
+    const handleSales = () => {
+        const ticket = localStorage.getItem('@seats').length === 1 ? {ds_assento: localStorage.getItem('@seats'), ds_tipo: localStorage.getItem('@typeTicket')} : localStorage.getItem('@seats').split(',').map(seat => ({ds_assento: seat, ds_tipo: localStorage.getItem('@typeTicket')}))
+        sendSales({
+            id_sessao: window.location.href.split('?')[1],
+            nr_protocolo:  Math.floor(Math.random() * 99999) + 1,
+            ds_formapagamento: localStorage.getItem('@paymentForms'),
+            ds_tipovenda: 'Online',
+            ds_nomecliente: localStorage.getItem('@EventsManager:user').ds_nome,
+            ds_tipodocumento: localStorage.getItem('@typeDocument'),
+            tickets: ticket,
+        });
+        history?.push('/ticket/'+event_id+'?'+window.location.href.split('?')[1])
+    }
     
     return (
         <Container>
@@ -38,7 +54,7 @@ const Booking = () => {
                 <PaymentForms />
                 <SeatChart seats={places}/>
                 <BookButton>
-                    <BookTicket onClick={() => localStorage.getItem('@EventsManager:token') ? history?.push('/ticket/'+event_id+'?'+window.location.href.split('?')[1]) : history?.push('/login') }>
+                    <BookTicket onClick={() => localStorage.getItem('@EventsManager:token') ? handleSales() : history?.push('/login') }>
                         <img src="/images/ticket.png" alt="" />
                         <span>GARANTA SEU INGRESSO</span>
                     </BookTicket>
