@@ -47,6 +47,7 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
                 }
 
                 api.defaults.headers.common['Authorization'] = `${token}`;
+                window.location.reload()
             })
             .catch((reason) => {
                 ToastService.dealWithErrorRequest(reason);

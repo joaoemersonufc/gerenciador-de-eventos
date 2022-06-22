@@ -33,7 +33,7 @@ function header() {
                     </>
                 )}
             </NavMenu>
-            <Link to="/login">
+            <Link to="/login" onClick={() => localStorage.clear()}>
                 <UserImg src="/images/profile.jpg" alt="user icon" />
             </Link>
         </Nav>
