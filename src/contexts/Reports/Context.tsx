@@ -20,8 +20,8 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
 
     const getReports = useCallback((data: IReport) => {
         setIsLoading(true);
-        api.get(`/reports`, {
-            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('@EventsManager:token') || '' }, data: { data }
+        api.post(`/reports`, data, {
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('@EventsManager:token') || '' }
         }).then((response) => {
             ToastService.success('Operação bem-sucedida');
             setReports(response.data)
