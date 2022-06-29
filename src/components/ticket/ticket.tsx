@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
-import { ticket } from '../../ticket_template/ticket';
+import { generateTicketDocument } from '../../ticket_template/ticket';
 
 interface DataProps {
     dataList: string[];
@@ -33,7 +33,7 @@ function Ticket({ dataList }: DataProps) {
             ]
         };
         
-        ticket(data);
+        generateTicketDocument(data);
     }, []);
 
     return (

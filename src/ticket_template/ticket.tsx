@@ -1,6 +1,6 @@
 import { formatNumberAsMoney } from "../utils/utils";
 
-export const ticket = (data: any) => {
+export const generateTicketDocument = (data: any) => {
   const mywindow = window.open('', 'PRINT', 'height=400,width=600');
   const totalValue = formatNumberAsMoney(data.nr_valorvenda);
   const partialValue = formatNumberAsMoney(data.nr_valorvenda - data.amountRate);
