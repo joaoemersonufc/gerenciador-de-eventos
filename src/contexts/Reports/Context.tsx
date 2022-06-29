@@ -2,26 +2,30 @@
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 import { ToastService } from '../../components/toast/toast';
 import { api } from '../../routes/providers/api';
+import { IReport, IValue } from './types';
 
 type PassiveTransponderProviderProps = {
     children: ReactNode;
 };
 
 type PassiveTransponderContextData = {
-    getReports: (type: string) => void;
+    getReports: (data: IReport) => void;
 };
 
 const PassiveTransponderContext = createContext({} as PassiveTransponderContextData);
 
 export function PassiveTransponderProvider({ children }: PassiveTransponderProviderProps): JSX.Element {
     const [isLoading, setIsLoading] = useState(false);
+    const [reports, setReports] = useState([] as IValue[]);
 
-    const getReports = useCallback((type: string) => {
+    const getReports = useCallback((data: IReport) => {
         setIsLoading(true);
-        api.post(`/reports`, data)
-            .then((response) => {
-                ToastService.success('Operação bem-sucedida');
-            })
+        api.post(`/reports`, data, {
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('@EventsManager:token') || '' }
+        }).then((response) => {
+            ToastService.success('Operação bem-sucedida');
+            setReports(response.data)
+        })
             .catch((reason) => {
                 ToastService.dealWithErrorRequest(reason);
             })
@@ -33,10 +37,12 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
     const data = useMemo(() => {
         return {
             getReports,
+            reports,
             isLoading
         };
     }, [
-        isLoading
+        isLoading,
+        reports
     ]);
 
     return <PassiveTransponderContext.Provider value={data}>{children}</PassiveTransponderContext.Provider>;

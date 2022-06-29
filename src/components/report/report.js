@@ -16,14 +16,14 @@ const Report = () => {
     const { reports, getReports } = useReports();
 
     useEffect(() => {
-      getReports(reports)
-    }, [reports]);
+      getReports({type: 'availableSessions'})
+    }, []);
 
     function setReportsType(type) {
       switch (type){
         case 'date':
           if(button === 'date'){
-            getReports('');
+            getReports({type: 'availableSessions'})
             setButton('');
             return;
           }
@@ -32,20 +32,20 @@ const Report = () => {
           break;
         case 'session':
           if(button === 'session'){
-            getReports('');
+            getReports({type: 'availableSessions'})
             setButton('');
             return;
           }
-          getReports('session');
+          getReports('session')
           setButton('session');
           break;
         case 'avaliable':
           if(button === 'avaliable'){
-            getReports('');
+            getReports({type: 'availableSessions'})
             setButton('');
             return;
           }
-          getReports('avaliable');
+          getReports('avaliable')
           setButton('avaliable');
           break;
         default:
@@ -73,7 +73,7 @@ const Report = () => {
           </button>
           </Header>
           <ReportList>
-              {reports}
+              {reports.map(report => <div>{report.ds_tipoevento}</div>)}
           </ReportList>
         </Container>
     )
