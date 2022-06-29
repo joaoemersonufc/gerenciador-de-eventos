@@ -37,7 +37,7 @@ function LoginForm({mode}) {
         email: '',
         password: '',
         repeatPassword: '',
-        birthDateDate: ''
+        birthDate: ''
     }
 
     const { getSignIn, getSignUp } = useLogin();
