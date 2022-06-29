@@ -34,7 +34,7 @@ export default function EventForm() {
             const year  = formatDate.getFullYear();
             const date = `${year}-${month}-${day}`;
             
-        s.placeId = Number(e.placeId); s.fullTicketValue = e.fullTicketValue; s.date = `${date} ${formatDate.toString().split(' ')[4]}`; return s})
+        s.placeId = Number(e.placeId); s.fullTicketValue = e.fullTicketValue; s.date = `${date} ${formatDate.toString()?.split(' ')[4]}`; return s})
         setEvent({description: e.description, name: e.name, eventType: e.eventType, sessions: newSessions})
     }
 

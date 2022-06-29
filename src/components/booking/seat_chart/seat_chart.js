@@ -40,7 +40,6 @@ class seat_chart extends React.Component {
     
     render() {
       localStorage.setItem('@seats', this.state.seatReserved);
-      console.log(this.state.seatUnavailable)
       return (
         <div>
           <h4>Reserve seu lugar</h4>

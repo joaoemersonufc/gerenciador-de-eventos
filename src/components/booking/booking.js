@@ -30,8 +30,6 @@ const Booking = () => {
         setPlaces(avaliableSeats)
     }, [avaliableSeats])
 
-    console.log(localStorage.getItem('@seats').split(','))
-
     const handleSales = () => {
         const ticket = localStorage.getItem('@seats').length === 1 ? {ds_assento: localStorage.getItem('@seats'), ds_tipo: localStorage.getItem('@typeTicket')} : localStorage.getItem('@seats').split(',').map(seat => ({ds_assento: seat, ds_tipo: localStorage.getItem('@typeTicket')}))
         sendSales({

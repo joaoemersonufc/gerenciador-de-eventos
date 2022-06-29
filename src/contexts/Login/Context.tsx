@@ -30,7 +30,6 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
         localStorage.removeItem('@EventsManager:role');
         api.post<ISignIn>(`/users/auth`, data)
             .then((response) => {
-                ToastService.success('Operação bem-sucedida');
                 push('/');
                 setIsSigned(true);
                 const { token, ...user } = response.data;
@@ -48,6 +47,7 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
 
                 api.defaults.headers.common['Authorization'] = `${token}`;
                 window.location.reload()
+                ToastService.success('Operação bem-sucedida');
             })
             .catch((reason) => {
                 ToastService.dealWithErrorRequest(reason);

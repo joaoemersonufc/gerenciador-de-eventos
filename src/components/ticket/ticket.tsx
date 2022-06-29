@@ -19,9 +19,6 @@ function Ticket({ dataList }: DataProps) {
 
     }, [dataList]);
 
-
-    console.log(localStorage);
-
     return (
         <Container>
             <TicketSection>

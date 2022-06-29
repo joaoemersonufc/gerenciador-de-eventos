@@ -9,7 +9,6 @@ import styled from 'styled-components';
 function header() {
 
     const role = localStorage.getItem('@EventsManager:role');
-    console.log(role)
     return (
         <Nav>
             <Link to="/" style={{"text-decoration":"none"}}>
