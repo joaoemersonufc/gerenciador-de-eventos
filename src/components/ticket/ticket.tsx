@@ -9,15 +9,32 @@ interface DataProps {
 function Ticket({ dataList }: DataProps) {
 
     const handleGenerate = useCallback(() => {
-        const pdfWindow = window.open('ticket');
-        dataList?.map(data => {
-            return (
-                pdfWindow?.document.write(ticket(pdfWindow, 'teste'))
-            );
-        }
-        );
-
-    }, [dataList]);
+        const data = {
+            "id_venda": "2",
+            "nr_protocolo": 165644,
+            "nr_valorvenda": 52.5,
+            "dt_venda": "2022-06-28T18:41:52.089Z",
+            "id_usuario": null,
+            "ds_formapagamento": "A Vista",
+            "ds_tipovenda": "Guichê",
+            "ds_nomecliente": "Luis Otávio Lima Caminha",
+            "ds_tipodocumento": "CPF",
+            "nr_documento": "082.738.693-18",
+            "amountRate": 2.5,
+            "tickets": [
+                {
+                "id_ingresso": 3,
+                "ds_assento": "4A",
+                "ds_tipo": "Meia",
+                "nr_valor": 50,
+                "id_sessao": 1,
+                "id_venda": 2
+                }
+            ]
+        };
+        
+        ticket(data);
+    }, []);
 
     return (
         <Container>
