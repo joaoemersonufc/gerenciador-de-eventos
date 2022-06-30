@@ -37,7 +37,7 @@ const Booking = () => {
             nr_protocolo:  Math.floor(Math.random() * 99999) + 1,
             ds_formapagamento: localStorage.getItem('@paymentForms'),
             ds_tipovenda: 'Online',
-            ds_nomecliente: localStorage.getItem('@EventsManager:user').ds_nome,
+            ds_nomecliente: localStorage.getItem('@EventsManager:user-name'),
             ds_tipodocumento: localStorage.getItem('@typeDocument'),
             tickets: ticket,
         });

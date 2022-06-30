@@ -14,5 +14,6 @@ export type ISignUp = {
 export type ISignIn = {
 	token?: string,
 	email: string,
+	ds_nome: string,
 	password: string,
 };

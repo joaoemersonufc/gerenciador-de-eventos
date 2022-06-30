@@ -37,6 +37,7 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
                 if (token) {
                     localStorage.setItem('@EventsManager:token', token);
                     localStorage.setItem('@EventsManager:user', JSON.stringify(user));
+                    localStorage.setItem('@EventsManager:user-name', user.ds_nome);
                     var base64Url = token.split('.')[1];
                     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
                     var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {

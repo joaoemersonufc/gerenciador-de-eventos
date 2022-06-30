@@ -2,6 +2,7 @@
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 import { ToastService } from '../../components/toast/toast';
 import { api } from '../../routes/providers/api';
+import { generateTicketDocument } from '../../ticket_template/ticket';
 import { IEvent, IEventList, ISales, ISeats } from './types';
 
 type PassiveTransponderProviderProps = {
@@ -100,6 +101,9 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
         api.post<ISales>(`/sales`, data, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('@EventsManager:token') || '' } })
             .then(() => {
                 ToastService.success('Operação bem-sucedida');
+                const tickets = data.tickets;
+                const value = (Math.floor(Math.random() * 99) + 1) * tickets.length;
+                generateTicketDocument({ ...data, nr_valorvenda: value + (value * 0.05), dt_venda: new Date(), nr_documento: localStorage.getItem('@numberDocument'), tickets: tickets.map(ticket => ({ ...ticket, nr_valor: value / tickets.length })), amountRate: value * 0.05, })
             })
             .catch((reason) => {
                 ToastService.dealWithErrorRequest(reason);

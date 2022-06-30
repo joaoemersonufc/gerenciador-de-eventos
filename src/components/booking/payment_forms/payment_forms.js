@@ -15,6 +15,7 @@ function PaymentForms() {
 
     localStorage.setItem('@paymentForms', values.paymentForms);
     localStorage.setItem('@typeTicket', values.typeTicket);
+    localStorage.setItem('@typeDocument', values.typeDocument);
 
     const cpf = (v) => {
         v=v.replace(/\D/g,"")                   
@@ -23,6 +24,8 @@ function PaymentForms() {
         v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2") 
         return v
     }
+    
+    localStorage.setItem('@numberDocument', cpf(values.numberDocument));
 
     return (
         <>

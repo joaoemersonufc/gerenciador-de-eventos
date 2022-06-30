@@ -3,7 +3,7 @@ import { formatNumberAsMoney } from "../utils/utils";
 export const generateTicketDocument = (data: any) => {
   const mywindow = window.open('', 'PRINT', 'height=400,width=600');
   const totalValue = formatNumberAsMoney(data.nr_valorvenda);
-  const partialValue = formatNumberAsMoney(data.nr_valorvenda - data.amountRate);
+  const partialValue = formatNumberAsMoney(Math.round(data.nr_valorvenda - (data.nr_valorvenda * 0.05)));
 
   let sailedTicketsHTML = data?.tickets.map((item: any) => {
     const ticketValue = formatNumberAsMoney(item.ds_tipo === 'Meia' ? item.nr_valor * 2 : item.nr_valor);
@@ -146,16 +146,16 @@ export const generateTicketDocument = (data: any) => {
       </body>
     </html>
     `);
-  
+
     mywindow.document.close(); // necessary for IE >= 10
     mywindow.focus(); // necessary for IE >= 10*/
-  
+
     mywindow.print();
     mywindow.close();
-  
+
     return true;
   }
-  
+
   return false;
- };
+};
 

@@ -55,11 +55,11 @@ export default function EventForm() {
     }
     
     const ranges = [
-        {
-          label: 'Agora',
-          value: new Date()
-        }
-      ];
+    {
+        label: 'Agora',
+        value: new Date()
+    }
+    ];
 
     const stringToDateTime = ( value, month ) => {
           const date = new Date(value).toLocaleDateString('pt-BR', {

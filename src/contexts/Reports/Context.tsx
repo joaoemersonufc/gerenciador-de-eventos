@@ -23,7 +23,6 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
         api.post(`/reports`, data, {
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem('@EventsManager:token') || '' }
         }).then((response) => {
-            ToastService.success('Operação bem-sucedida');
             setReports(response.data)
         })
             .catch((reason) => {
