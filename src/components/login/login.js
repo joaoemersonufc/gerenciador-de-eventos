@@ -1,6 +1,8 @@
 import 'font-awesome/css/font-awesome.min.css';
 import { useFormik } from 'formik';
 import { useState } from 'react';
+import DatePicker from 'rsuite/DatePicker';
+import ptBR from 'rsuite/locales/pt_BR';
 import styled from 'styled-components';
 import { useLogin } from '../../contexts/Login/Context';
 import { validationSchema } from './singUpEvent';
@@ -37,7 +39,7 @@ function LoginForm({mode}) {
         email: '',
         password: '',
         repeatPassword: '',
-        birthDate: ''
+        birthDate: new Date(),
     }
 
     const { getSignIn, getSignUp } = useLogin();
@@ -55,17 +57,7 @@ function LoginForm({mode}) {
         v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2") 
         return v
     }
-
-    const dateInputMask = (elm) => {
-          var len = elm?.length;
-          if(len === 2) {
-            return elm += '/';
-          }
-          if(len === 5) {
-            return elm += '/';
-          }
-      };
-
+    
     return (
         <Form onSubmit={handleSubmit}>
             <div>
@@ -106,11 +98,26 @@ function LoginForm({mode}) {
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-user" />
-                        <Input maxLength={10} type="text" name="birthDate" label="birthDateday" placeholder="Digite sua data de nascimento" disabled={mode} value={dateInputMask(values.birthDate)} onChange={handleChange} />
+                        <InputDate>
+                            <h4>Insira a data do seu aniversario</h4>
+                            <DatePicker
+                                name="birthDate"
+                                label="birthDate"
+                                format="dd MMM yyyy"
+                                showMeridian
+                                locale={ptBR} 
+                                maxLength={10}
+                                onChange={handleChange}
+                            />
+                        </InputDate>
                     </InputIcon>
                     <InputIcon style={{display: mode ? "none": ""}}>
                         <i className="fa fa-user" />
-                        <Input maxLength={1} type="sexo" name="sexo" label="sexo" placeholder="Sexo" disabled={mode} value={values.sexo} onChange={handleChange} />
+                        <select maxLength={1} type="sexo" name="sexo" label="sexo" placeholder="Sexo" disabled={mode} value={values.sexo} onChange={handleChange}>
+                            <option default hidden>Selecione seu genero</option>
+                            <option value="M" >M</option>
+                            <option value="F">F</option>
+                        </select>
                     </InputIcon>
                 </div>
             </div>
@@ -119,6 +126,30 @@ function LoginForm({mode}) {
     )
 
 }
+
+const InputDate = styled.div`
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    flex-flow: row;
+    color: rgb(118, 118, 118);
+    margin-bottom: 15px;
+    padding: 15px 0;
+    padding-right: 15px;
+    padding-left: 45px;
+    background: #333;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: $borderRadius;
+    &:focus {
+        color: white;
+        outline: white;
+        border: 1px solid #fff;
+    }
+    h4{
+        font-size: 16px;
+        font-weight: normal;
+    }
+`
 
 const Container = styled.div`
     position: relative;
@@ -138,6 +169,54 @@ const Container = styled.div`
         left:0;
         right:0;
         z-index:-1;
+    }
+
+    .rs-picker-toggle, .rs-picker {
+        display: flex;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 200px !important;
+        background: transparent !important;
+        text-align-last: center !important;
+        margin: 0 !important;;
+        padding: 0 !important;
+
+        svg {
+            display: none;
+        }
+        &.rs-picker-default .rs-picker-toggle {
+            border: none !important;
+        }
+        .rs-picker-toggle-placeholder {
+            padding-top: 8px;
+
+        }
+
+        @media screen and (max-width: 777px){
+            width: 105px !important;
+        }
+    }
+
+    input, select, .rs-picker {
+        width: 100%;
+        color: white;
+        margin-bottom: 15px;
+        font-size: 16px;
+        padding: 15px 0;
+        padding-right: 15px;
+        padding-left: 45px;
+        background: #333;
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: $borderRadius;
+        &:focus {
+            color: white;
+            outline: white;
+            border: 1px solid #fff;
+        }
+    }
+    
+    #birthDate.note:empty:before{
+        content: "Enter your number";
     }
 `
 
