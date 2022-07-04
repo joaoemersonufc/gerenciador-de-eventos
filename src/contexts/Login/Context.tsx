@@ -21,6 +21,7 @@ const PassiveTransponderContext = createContext({} as PassiveTransponderContextD
 export function PassiveTransponderProvider({ children }: PassiveTransponderProviderProps): JSX.Element {
     const [isLoading, setIsLoading] = useState(false);
     const [isSigned, setIsSigned] = useState(false);
+    let history = useHistory();
     const { push } = useHistory();
 
     const getSignIn = useCallback((data: ISignIn) => {
@@ -65,7 +66,7 @@ export function PassiveTransponderProvider({ children }: PassiveTransponderProvi
                 .post(`/users`, data)
                 .then(() => {
                     ToastService.success('Operação bem-sucedida');
-                    window.location.reload();
+                    history?.push('/login/');
                 })
                 .catch((reason) => {
                     ToastService.dealWithErrorRequest(reason);
